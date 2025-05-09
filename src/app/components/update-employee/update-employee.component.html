@@ -1,0 +1,16 @@
+<div class="form-container">
+    <h2>Update Employee</h2>
+    <form (ngSubmit)="onUpdate()">
+      <label>First Name:</label>
+      <input type="text" [(ngModel)]="employee.firstName" name="firstName" required />
+  
+      <label>Last Name:</label>
+      <input type="text" [(ngModel)]="employee.lastName" name="lastName" required />
+  
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="employee.emailId" name="emailId" required />
+  
+      <button type="submit">Update</button>
+    </form>
+  </div>
+  
