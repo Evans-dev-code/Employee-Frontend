@@ -1,16 +1,42 @@
 <div class="form-container">
-    <h2>Update Employee</h2>
-    <form (ngSubmit)="onUpdate()">
-      <label>First Name:</label>
-      <input type="text" [(ngModel)]="employee.firstName" name="firstName" required />
-  
-      <label>Last Name:</label>
-      <input type="text" [(ngModel)]="employee.lastName" name="lastName" required />
-  
-      <label>Email:</label>
-      <input type="email" [(ngModel)]="employee.emailId" name="emailId" required />
-  
-      <button type="submit">Update</button>
-    </form>
-  </div>
-  
+  <h2>Update Employee</h2>
+  <form (ngSubmit)="onUpdate()">
+    
+    <label for="firstName">First Name:</label>
+    <input 
+      type="text" 
+      id="firstName" 
+      name="firstName" 
+      [(ngModel)]="employee.firstName" 
+      required />
+
+    <label for="lastName">Last Name:</label>
+    <input 
+      type="text" 
+      id="lastName" 
+      name="lastName" 
+      [(ngModel)]="employee.lastName" 
+      required />
+
+    <label for="emailId">Email:</label>
+    <input 
+      type="email" 
+      id="emailId" 
+      name="emailId" 
+      [(ngModel)]="employee.emailId" 
+      required />
+
+    <label for="department">Department:</label>
+    <select 
+      id="department" 
+      name="departmentId" 
+      [(ngModel)]="employee.departmentId" 
+      required>
+      <option *ngFor="let dept of departments" [value]="dept.id">
+        {{ dept.name }}
+      </option>
+    </select>
+
+    <button type="submit">Update</button>
+  </form>
+</div>

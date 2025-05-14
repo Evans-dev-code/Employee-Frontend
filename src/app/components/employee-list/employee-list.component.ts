@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ListEmployeesComponent implements OnInit {
   employees: any[] = [];
+  filteredEmployees: any[] = [];
+  departments: string[] = [];
+  selectedDepartment: string = '';
 
   constructor(private employeeService: EmployeeService, private router: Router) {}
 
@@ -19,13 +22,25 @@ export class ListEmployeesComponent implements OnInit {
   loadEmployees(): void {
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data;
+      this.filteredEmployees = data;
+      this.departments = [...new Set(data.map(emp => emp.departmentName).filter((name): name is string => !!name))];
     });
+  }
+
+  filterEmployees(): void {
+    if (this.selectedDepartment) {
+      this.filteredEmployees = this.employees.filter(
+        emp => emp.departmentName === this.selectedDepartment
+      );
+    } else {
+      this.filteredEmployees = this.employees;
+    }
   }
 
   deleteEmployee(id: number): void {
     if (confirm('Are you sure you want to delete this employee?')) {
       this.employeeService.deleteEmployee(id).subscribe(() => {
-        this.loadEmployees(); // Reload the list after deletion
+        this.loadEmployees();
       });
     }
   }
@@ -34,3 +49,4 @@ export class ListEmployeesComponent implements OnInit {
     this.router.navigate(['/update-employee', id]);
   }
 }
+

@@ -1,8 +1,10 @@
 <nav>
   <h1>Employee Management System</h1>
-  <ul>
+
+  <ul *ngIf="isLoggedIn()">
     <li><a routerLink="/employees">Employee List</a></li>
     <li><a routerLink="/add-employee">Add Employee</a></li>
+    <li><button class="logout-button" (click)="logout()">Logout</button></li>
   </ul>
 </nav>
 

@@ -1,59 +1,63 @@
 h2 {
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#departmentFilter {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #ffffff;
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
   }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border: 1px solid #ddd;
-    }
-  
-    th {
-      background-color: #007bff;
-      color: white;
-      font-size: 18px;
-    }
-  
-    td {
-      font-size: 16px;
-      color: #555;
-    }
-  
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-  }
-  
-  button {
-    padding: 8px 16px;
-    font-size: 14px;
+
+  thead {
+    background-color: #34495e;
     color: white;
-    background-color: #007bff;
+  }
+
+  tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+
+  button {
+    margin-right: 5px;
+    padding: 6px 12px;
+    font-size: 13px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: 8px;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #0056b3;
+
+    &:first-child {
+      background-color: #3498db;
+      color: white;
     }
-  
-    &:focus {
-      outline: none;
+
+    &:last-child {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    &:hover {
+      opacity: 0.9;
     }
   }
-  
+}
