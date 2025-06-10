@@ -1,0 +1,63 @@
+<div class="salary-container">
+  <h2>Salary History for Employee ID: {{ employeeId }}</h2>
+
+  <table *ngIf="salaryHistory.length > 0">
+    <thead>
+      <tr>
+        <th>Effective Date</th>
+        <th>Base Salary</th>
+        <th>Bonus</th>
+        <th>Tax</th>
+        <th>Net Salary</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let salary of salaryHistory">
+        <td>{{ salary.effectiveDate }}</td>
+        <td>{{ salary.baseSalary | currency }}</td>
+        <td>{{ salary.bonus | currency }}</td>
+        <td>{{ salary.tax | currency }}</td>
+        <td>{{ salary.netSalary | currency }}</td>
+        <td>
+          <button *ngIf="isCurrentMonth(salary.effectiveDate)" (click)="showForm(salary)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="salaryHistory.length === 0">No salary history available.</p>
+
+  <button (click)="showForm()" class="add-salary-btn">Add Salary</button>
+
+  <div *ngIf="formVisible" class="salary-form">
+    <h3>{{ selectedRecordId ? 'Edit Salary Record' : 'Add New Salary' }}</h3>
+
+    <form [formGroup]="currentSalaryForm" (ngSubmit)="saveSalary()">
+      <div class="form-group">
+        <label for="baseSalary">Base Salary:</label>
+        <input id="baseSalary" type="number" formControlName="baseSalary" required />
+      </div>
+
+      <div class="form-group">
+        <label for="bonus">Bonus:</label>
+        <input id="bonus" type="number" formControlName="bonus" required />
+      </div>
+
+      <div class="form-group">
+        <label for="tax">Tax:</label>
+        <input id="tax" type="number" formControlName="tax" required />
+      </div>
+
+      <div class="form-group">
+        <label for="effectiveDate">Effective Date:</label>
+        <input id="effectiveDate" type="date" formControlName="effectiveDate" required />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="currentSalaryForm.invalid">Save</button>
+        <button type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

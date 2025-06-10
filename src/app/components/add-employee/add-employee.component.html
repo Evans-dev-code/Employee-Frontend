@@ -1,3 +1,4 @@
+<!-- add-employee.component.html -->
 <div class="form-container">
   <h2>Add Employee</h2>
   <form (ngSubmit)="onSubmit()">
@@ -11,12 +12,14 @@
     <input type="email" [(ngModel)]="employee.emailId" name="emailId" required />
 
     <label for="departmentId">Department:</label>
-    <select [(ngModel)]="employee.departmentId" name="departmentId" required>
-  <option *ngFor="let dept of departments" [value]="dept.id">
-    {{ dept.name }}
-  </option>
-</select>
+    <select [(ngModel)]="selectedDepartmentId" name="departmentId" (change)="onDepartmentChange()" required>
+      <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+    </select>
 
+    <label for="positionId">Position:</label>
+    <select [(ngModel)]="employee.positionId" name="positionId" required>
+      <option *ngFor="let pos of positions" [value]="pos.id">{{ pos.title }}</option>
+    </select>
 
     <button type="submit">Save</button>
   </form>

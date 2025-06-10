@@ -7,8 +7,10 @@ export interface Employee {
   firstName: string;
   lastName: string;
   emailId: string;
+  positionId?: number;
   departmentId?: number; 
   departmentName?: string;
+  positionName?: string;
 }
 
 @Injectable({

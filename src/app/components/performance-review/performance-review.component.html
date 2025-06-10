@@ -1,0 +1,89 @@
+<h2 class="mb-4">Performance Reviews for Employee ID: {{ employeeId }}</h2>
+
+<!-- Show "Add Review" button only if form is hidden -->
+<button *ngIf="!showForm" (click)="openAddForm()" class="add-review-btn mb-4">
+  Add Review
+</button>
+
+<!-- Review Form (shown only when adding or editing) -->
+<form *ngIf="showForm" (ngSubmit)="saveReview()" class="review-form mb-6 p-6 bg-white rounded shadow">
+  <div class="grid grid-cols-2 gap-4">
+    <input
+      class="p-2 border rounded"
+      [(ngModel)]="form.reviewer"
+      name="reviewer"
+      placeholder="Reviewer"
+      required
+    />
+    <input
+      class="p-2 border rounded"
+      type="date"
+      [(ngModel)]="form.reviewDate"
+      name="reviewDate"
+      required
+    />
+    <input
+      class="p-2 border rounded"
+      type="number"
+      [(ngModel)]="form.score"
+      name="score"
+      placeholder="Score"
+      required
+      min="0"
+      max="100"
+    />
+    <input
+      class="p-2 border rounded"
+      type="date"
+      [(ngModel)]="form.nextReviewDate"
+      name="nextReviewDate"
+    />
+  </div>
+  <textarea
+    class="w-full p-2 mt-4 border rounded"
+    [(ngModel)]="form.comments"
+    name="comments"
+    placeholder="Comments"
+  ></textarea>
+
+  <div class="flex gap-4 mt-4">
+    <button type="submit" class="btn btn-primary">
+      {{ editing ? 'Update Review' : 'Add Review' }}
+    </button>
+    <button type="button" (click)="cancelEdit()" class="btn btn-secondary">
+      Cancel
+    </button>
+  </div>
+</form>
+
+<!-- Review Table -->
+<table class="reviews-table w-full border-collapse border border-gray-300">
+  <thead class="bg-gray-200">
+    <tr>
+      <th class="border px-4 py-2">Reviewer</th>
+      <th class="border px-4 py-2">Score</th>
+      <th class="border px-4 py-2">Review Date</th>
+      <th class="border px-4 py-2">Next Review</th>
+      <th class="border px-4 py-2">Comments</th>
+      <th class="border px-4 py-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let review of reviews">
+      <td class="border px-4 py-2">{{ review.reviewer }}</td>
+      <td class="border px-4 py-2">{{ review.score }}</td>
+      <td class="border px-4 py-2">{{ review.reviewDate | date:'mediumDate' }}</td>
+      <td class="border px-4 py-2">{{ review.nextReviewDate | date:'mediumDate' }}</td>
+      <td class="border px-4 py-2">{{ review.comments }}</td>
+      <td class="border px-4 py-2">
+        <button (click)="editReview(review)" class="btn btn-warning mr-2">Edit</button>
+        <button (click)="deleteReview(review.id!)" class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+    <tr *ngIf="reviews.length === 0">
+      <td class="border px-4 py-2 text-center" colspan="6">
+        No reviews available for this employee.
+      </td>
+    </tr>
+  </tbody>
+</table>

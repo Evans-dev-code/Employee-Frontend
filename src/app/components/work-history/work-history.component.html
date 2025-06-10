@@ -1,0 +1,94 @@
+<div class="salary-container">
+  <h2>Work History</h2>
+
+  <button class="add-salary-btn" (click)="showForm()">Add Work History</button>
+
+  <table *ngIf="workHistoryList.length > 0">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Position</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Type</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let work of workHistoryList">
+        <td>{{ work.companyName }}</td>
+        <td>{{ work.positionTitle }}</td>
+        <td>{{ work.startDate }}</td>
+        <td>{{ work.endDate || 'Present' }}</td>
+        <td>{{ work.employmentType }}</td>
+        <td>{{ work.location }}</td>
+        <td>
+          <button (click)="showForm(work)">Edit</button>
+          <button (click)="deleteItem(work.id!)" style="background-color: #dc3545;">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="workHistoryList.length === 0">No work history records found.</p>
+
+  <div *ngIf="formVisible" class="salary-form">
+    <h3>{{ isEdit ? 'Edit Work History' : 'Add Work History' }}</h3>
+
+    <form [formGroup]="workForm" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label>Company Name</label>
+        <input formControlName="companyName" type="text">
+      </div>
+      <div class="form-group">
+        <label>Position Title</label>
+        <input formControlName="positionTitle" type="text">
+      </div>
+      <div class="form-group">
+        <label>Start Date</label>
+        <input formControlName="startDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>End Date</label>
+        <input formControlName="endDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>Responsibilities</label>
+        <input formControlName="responsibilities" type="text">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input formControlName="location" type="text">
+      </div>
+      <div class="form-group">
+        <label>Employment Type</label>
+        <select formControlName="employmentType">
+          <option value="FULL_TIME">Full Time</option>
+          <option value="PART_TIME">Part Time</option>
+          <option value="INTERNSHIP">Internship</option>
+          <option value="CONTRACT">Contract</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Supervisor Name</label>
+        <input formControlName="supervisorName" type="text">
+      </div>
+      <div class="form-group">
+        <label>Supervisor Contact</label>
+        <input formControlName="supervisorContact" type="text">
+      </div>
+      <div class="form-group">
+        <label>Reason for Leaving</label>
+        <input formControlName="reasonForLeaving" type="text">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="workForm.invalid">
+          {{ isEdit ? 'Update' : 'Save' }}
+        </button>
+        <button type="button" (click)="hideForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

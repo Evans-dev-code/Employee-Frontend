@@ -1,0 +1,35 @@
+<div class="education-container">
+  <h2>Education Section</h2>
+
+  <!-- List all education records -->
+  <div *ngIf="educations.length > 0 && !formVisible">
+    <div *ngFor="let edu of educations" class="education-record">
+      <h4>{{ edu.degreeName }}</h4>
+      <p><strong>Institution:</strong> {{ edu.institution }}</p>
+      <p><strong>Graduation Year:</strong> {{ edu.graduationYear }}</p>
+      <p><strong>Uploaded:</strong> {{ edu.uploadedAt }}</p>
+
+      <button (click)="download(edu.id)">Download File</button>
+      <button (click)="showEdit(edu)">Edit</button>
+      <button (click)="delete(edu.id)">Delete</button>
+    </div>
+  </div>
+
+  <!-- Upload or Edit form -->
+  <form *ngIf="formVisible || educations.length === 0" (ngSubmit)="upload()" class="education-form">
+    <input type="text" placeholder="Degree Name" [(ngModel)]="form.degreeName" name="degreeName" required />
+    <input type="text" placeholder="Institution" [(ngModel)]="form.institution" name="institution" required />
+    <input type="number" placeholder="Graduation Year" [(ngModel)]="form.graduationYear" name="graduationYear" required />
+
+    <div>
+      <input type="file" (change)="onFileChange($event)" [required]="!editing" />
+    </div>
+
+    <button type="submit" [disabled]="loading">{{ editing ? 'Update' : 'Upload' }}</button>
+    <button type="button" (click)="formVisible = false" *ngIf="editing">Cancel</button>
+  </form>
+
+  <button *ngIf="!formVisible && !editing" (click)="formVisible = true">Add Education</button>
+
+  <p class="message">{{ message }}</p>
+</div>

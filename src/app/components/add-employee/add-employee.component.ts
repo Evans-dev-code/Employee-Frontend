@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService, Employee } from 'src/app/services/employee.service';
+import { PositionService, Position } from 'src/app/services/position.service';
+import { DepartmentService, Department } from 'src/app/services/department.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-employee',
@@ -14,24 +15,55 @@ export class AddEmployeeComponent implements OnInit {
     firstName: '',
     lastName: '',
     emailId: '',
-    departmentId: 0 // add departmentId
+    positionId: 0
   };
 
-  departments: any[] = [];
+  departments: Department[] = [];
+  positions: Position[] = [];
 
-  constructor(private employeeService: EmployeeService, private http: HttpClient, private router: Router) {}
+  selectedDepartmentId: number = 0;
+
+  constructor(
+    private employeeService: EmployeeService,
+    private departmentService: DepartmentService,
+    private positionService: PositionService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.getDepartments();
+    this.loadDepartments();
   }
 
-  getDepartments(): void {
-    
-    this.http.get<any[]>('http://localhost:8080/api/departments')
-      .subscribe(data => this.departments = data);
+  loadDepartments(): void {
+    this.departmentService.getDepartments().subscribe(data => {
+      this.departments = data;
+      if (this.departments.length > 0) {
+        this.selectedDepartmentId = this.departments[0].id;
+        this.loadPositions(this.selectedDepartmentId);
+      }
+    });
+  }
+
+  loadPositions(departmentId: number): void {
+    this.positionService.getPositionsByDepartment(departmentId).subscribe(data => {
+      this.positions = data;
+      if (this.positions.length > 0) {
+        this.employee.positionId = this.positions[0].id;
+      } else {
+        this.employee.positionId = 0; // no position selected
+      }
+    });
+  }
+
+  onDepartmentChange(): void {
+    this.loadPositions(this.selectedDepartmentId);
   }
 
   onSubmit(): void {
+    if(this.employee.positionId === 0) {
+      alert('Please select a valid position.');
+      return;
+    }
     this.employeeService.addEmployee(this.employee).subscribe(() => {
       this.router.navigate(['/employees']);
     });

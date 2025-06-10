@@ -1,39 +1,57 @@
 <div class="form-container">
   <h2>Update Employee</h2>
   <form (ngSubmit)="onUpdate()">
-    
     <label for="firstName">First Name:</label>
-    <input 
-      type="text" 
-      id="firstName" 
-      name="firstName" 
-      [(ngModel)]="employee.firstName" 
-      required />
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      [(ngModel)]="employee.firstName"
+      required
+    />
 
     <label for="lastName">Last Name:</label>
-    <input 
-      type="text" 
-      id="lastName" 
-      name="lastName" 
-      [(ngModel)]="employee.lastName" 
-      required />
+    <input
+      type="text"
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="employee.lastName"
+      required
+    />
 
     <label for="emailId">Email:</label>
-    <input 
-      type="email" 
-      id="emailId" 
-      name="emailId" 
-      [(ngModel)]="employee.emailId" 
-      required />
+    <input
+      type="email"
+      id="emailId"
+      name="emailId"
+      [(ngModel)]="employee.emailId"
+      required
+    />
 
     <label for="department">Department:</label>
-    <select 
-      id="department" 
-      name="departmentId" 
-      [(ngModel)]="employee.departmentId" 
-      required>
+    <select
+      id="department"
+      name="departmentId"
+      [(ngModel)]="selectedDepartmentId"
+      (change)="onDepartmentChange()"
+      required
+    >
+      <option [value]="0" disabled>Select Department</option>
       <option *ngFor="let dept of departments" [value]="dept.id">
         {{ dept.name }}
+      </option>
+    </select>
+
+    <label for="position">Position:</label>
+    <select
+      id="position"
+      name="positionId"
+      [(ngModel)]="employee.positionId"
+      required
+    >
+      <option [value]="0" disabled>Select Position</option>
+      <option *ngFor="let pos of positions" [value]="pos.id">
+        {{ pos.title }}
       </option>
     </select>
 

@@ -1,0 +1,17 @@
+<div class="profile-layout">
+  <aside class="sidebar">
+    <h2>Employee Profile</h2>
+    <nav>
+      <a [routerLink]="['education']" routerLinkActive="active">Education</a>
+      <a [routerLink]="['salary']" routerLinkActive="active">Salary</a>
+      <a [routerLink]="['emergencycontact']" routerLinkActive="active">Emergency Contact</a>
+      <a [routerLink]="['workhistory']" routerLinkActive="active">Work History</a>
+      <a [routerLink]="['skill']" routerLinkActive="active">Skill</a>
+      <a [routerLink]="['performancereview']" routerLinkActive="active">Performance Review</a>
+    </nav>
+  </aside>
+
+  <main class="profile-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

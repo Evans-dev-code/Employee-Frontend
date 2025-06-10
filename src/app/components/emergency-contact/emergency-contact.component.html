@@ -1,0 +1,40 @@
+<div class="emergency-container">
+  <h3>Emergency Contacts</h3>
+
+  <button class="add-contact-btn" (click)="openForm()">Add Contact</button>
+
+  <ul *ngIf="contacts.length > 0; else noContacts">
+    <li *ngFor="let contact of contacts" class="contact-item">
+      <strong>{{ contact.name }}</strong> ({{ contact.relationship }}) - {{ contact.phone }}
+      <div class="contact-actions">
+        <button (click)="openForm(contact)">Edit</button>
+        <button (click)="deleteContact(contact.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #noContacts>
+    <p>No emergency contacts found.</p>
+  </ng-template>
+
+  <div class="contact-form" *ngIf="showForm">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="form-group">
+        <label>Name</label>
+        <input formControlName="name" placeholder="Name" />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input formControlName="phone" placeholder="Phone" />
+      </div>
+      <div class="form-group">
+        <label>Relationship</label>
+        <input formControlName="relationship" placeholder="Relationship" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="form.invalid">Save</button>
+        <button type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
